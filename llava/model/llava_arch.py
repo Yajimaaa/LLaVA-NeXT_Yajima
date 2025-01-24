@@ -190,8 +190,29 @@ class LlavaMetaForCausalLM(ABC):
         return image_feature
 
     def encode_images(self, images):
+        #import pdb; pdb.set_trace()
         image_features = self.get_model().get_vision_tower()(images)
         # image_features = self.get_model().vision_resampler(image_features, images=images)
+            # image_featuresの特徴量をNumPy配列に変換（後で保存のため）
+        """
+        image_features_numpy = image_features.detach().cpu().numpy()  # GPUからCPUに移動してNumPy配列に変換
+        import numpy as np
+        # 既存のNumPyファイルに追加
+        try:
+            # 既存の特徴量ファイルを読み込む
+            existing_features = np.load('features.npy', allow_pickle=True)
+            
+            # 新しい特徴量を既存の配列に追加
+            updated_features = np.concatenate((existing_features, image_features_numpy), axis=0)
+            
+            # 更新した特徴量を再保存
+            np.save('features.npy', updated_features)
+            
+        except FileNotFoundError:
+            # ファイルが存在しない場合、新規作成
+            np.save('features.npy', image_features_numpy)
+        #from IPython import embed;embed() 
+        """
         image_features = self.get_model().mm_projector(image_features)
         return image_features
     
@@ -407,7 +428,10 @@ class LlavaMetaForCausalLM(ABC):
                     else:  # single image operations
                         image_feature = image_feature[0]
                         if "unpad" in mm_patch_merge_type:
-                            image_feature = torch.cat((image_feature, self.model.image_newline[None]), dim=0)
+                            image_feature = image_feature.to('cuda:0') #追加
+                            #self.model.image_newline[None] = self.model.image_newline[None].to('cuda:0') #追加
+                            #image_feature = torch.cat((image_feature, self.model.image_newline[None]), dim=0)　# 追加
+                            image_feature = torch.cat((image_feature, self.model.image_newline[None]), dim=0) #追加
 
                         new_image_features.append(image_feature)
                 image_features = new_image_features
