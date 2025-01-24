@@ -145,6 +145,7 @@ def select_best_resolution(original_size, possible_resolutions):
             max_effective_resolution = effective_resolution
             min_wasted_resolution = wasted_resolution
             best_fit = (width, height)
+            
 
     return best_fit
 
@@ -177,10 +178,10 @@ def resize_and_pad_image(image, target_resolution):
         new_width = min(math.ceil(original_width * scale_h), target_width)
 
     # Resize the image
-    resized_image = image.resize((new_width, new_height))
+    resized_image = image.resize((new_width, new_height))#元の画像のリサイズ
 
     # Create a new image with the target size and paste the resized image onto it
-    new_image = Image.new("RGB", (target_width, target_height), (0, 0, 0))
+    new_image = Image.new("RGB", (target_width, target_height), (0, 0, 0))#
     paste_x = (target_width - new_width) // 2
     paste_y = (target_height - new_height) // 2
     new_image.paste(resized_image, (paste_x, paste_y))
@@ -273,9 +274,8 @@ def process_anyres_image(image, processor, grid_pinpoints):
     else:
         possible_resolutions = ast.literal_eval(grid_pinpoints)
     best_resolution = select_best_resolution(image.size, possible_resolutions)
-    image_padded = resize_and_pad_image(image, best_resolution)
-
-    patches = divide_to_patches(image_padded, processor.crop_size["height"])
+    image_padded = resize_and_pad_image(image, best_resolution)#リサイズとパディングされた画像
+    patches = divide_to_patches(image_padded, processor.crop_size["height"])#30
 
     # FIXME: this seems to be a bug that it resizes instead of pad.
     # but to keep it consistent with previous, i will keep it as it is
@@ -288,7 +288,7 @@ def process_anyres_image(image, processor, grid_pinpoints):
     # image_padded_square = expand2square(image, tuple(int(x*255) for x in processor.image_mean))
     # image_original_resize = image_padded_square.resize((processor.size['shortest_edge'], processor.size['shortest_edge']))
 
-    image_patches = [image_original_resize] + patches
+    image_patches = [image_original_resize] + patches # 31
     image_patches = [processor.preprocess(image_patch, return_tensors="pt")["pixel_values"][0] for image_patch in image_patches]
     return torch.stack(image_patches, dim=0)
 
