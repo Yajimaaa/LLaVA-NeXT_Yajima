@@ -1,0 +1,36 @@
+
+2024-10-23 16:08:47
+質問: <image>These are images of the cross-sections of a male and a female connector. Can this male connector be inserted into the female connector perfectly? Please answer with yes or no.
+ペグ画像: 3_DE-15.jpg
+ホール画像：3_DE-15.jpg
+応答: Yes.
+
+ペグ画像: 3_DE-15.jpg
+ホール画像：9_USB-C.jpg
+応答: Yes.
+
+ペグ画像: 3_DE-15.jpg
+ホール画像：6_HDMI.jpg
+応答: Yes.
+
+ペグ画像: 3_DE-15.jpg
+ホール画像：2_DE-9.jpg
+応答: Yes.
+
+2024-10-23 18:55:07
+質問: These are images of the cross-sections of a male and a female connector. Can this male connector be inserted into the female connector perfectly? Please answer with yes or no.
+ペグ画像: 3_DE-15.jpg
+ホール画像：3_DE-15.jpg
+応答: Yes.
+
+ペグ画像: 3_DE-15.jpg
+ホール画像：9_USB-C.jpg
+応答: Yes.
+
+ペグ画像: 3_DE-15.jpg
+ホール画像：6_HDMI.jpg
+応答: Yes.
+
+ペグ画像: 3_DE-15.jpg
+ホール画像：2_DE-9.jpg
+応答: Yes.
